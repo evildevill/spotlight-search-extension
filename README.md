@@ -239,6 +239,63 @@ journalctl /usr/bin/gnome-shell -f
 
 ---
 
+## 🤝 Contributing
+
+Contributions are welcome! Whether it's bug reports, feature requests, or code improvements.
+
+**Ways to contribute:**
+- 🐛 Report bugs via [GitHub Issues](https://github.com/evildevill/spotlight-search-extension/issues)
+- 💡 Suggest features or improvements
+- 🔧 Submit pull requests for fixes or enhancements
+- 📖 Improve documentation
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+- Code style and conventions
+- Testing requirements
+- Pull request process
+- Development workflow
+
+---
+
+## ❓ FAQ
+
+### How do I change the keyboard shortcut?
+
+Edit the `KEYBINDING` value in the `CONFIG` object at the top of `extension.js`, then restart GNOME Shell.
+
+### Why are my search results incomplete?
+
+Check if you have permission to access the directories being searched. You can also increase `FIND_MAX_DEPTH` or add specific directories to `SEARCH_DIRS`.
+
+### Can I search system directories like `/usr` or `/opt`?
+
+Yes! Add them to `SEARCH_DIRS` in `extension.js`. Note that searching large system directories may slow down results.
+
+### Does this extension send data anywhere?
+
+No. All searches are performed locally on your machine using the `find` command. No network requests are made.
+
+### How do I uninstall?
+
+```bash
+gnome-extensions disable spotlight-search@extension
+rm -rf ~/.local/share/gnome-shell/extensions/spotlight-search@extension
+```
+
+### Can I use this with Wayland?
+
+Yes! The extension works on both X11 and Wayland sessions. Just remember to log out/in after installation on Wayland.
+
+### Why doesn't the calculator support more functions?
+
+The current implementation focuses on basic arithmetic for security and simplicity. If you need scientific functions, consider opening a feature request!
+
+### How can I make results appear faster?
+
+Lower the `SEARCH_DELAY_MS` value in CONFIG (e.g., from 50 to 20). Be cautious - too low may cause excessive CPU usage.
+
+---
+
 ## 👤 Author
 
 **Waseem Akram (GitHub: @evildevill)**
@@ -252,6 +309,14 @@ journalctl /usr/bin/gnome-shell -f
 - GitHub: [@evildevill](https://github.com/evildevill)
 - Email: hi@wasii.dev
 - Website: [wasii.dev](https://wasii.dev)
+
+---
+
+## 📜 License
+
+MIT License - see LICENSE file for details.
+
+Copyright © 2026 Waseem Akram
 
 ---
 

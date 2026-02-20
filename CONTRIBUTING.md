@@ -1,6 +1,29 @@
-# Contributing Guide
+# Contributing to Spotlight Search
 
-Thank you for your interest in contributing! This project powers a personal website & platform built with Next.js, TypeScript, Tailwind CSS, MongoDB, and supporting tooling for content, newsletter, store, learning material, and authentication.
+Thank you for your interest in contributing to Spotlight Search! This document provides guidelines and instructions for contributing to this GNOME Shell extension project.
+
+---
+
+## 📋 Table of Contents
+
+- [Code of Conduct](#code-of-conduct)
+- [How Can I Contribute?](#how-can-i-contribute)
+- [Development Setup](#development-setup)
+- [Coding Standards](#coding-standards)
+- [Commit Guidelines](#commit-guidelines)
+- [Pull Request Process](#pull-request-process)
+- [Testing](#testing)
+- [Need Help?](#need-help)
+
+---
+
+## 🤝 Code of Conduct
+
+By participating in this project, you agree to maintain a respectful and inclusive environment. Be kind, constructive, and professional in all interactions.
+
+---
+
+## 💡 How Can I Contribute?
 
 
 ### Reporting Bugs

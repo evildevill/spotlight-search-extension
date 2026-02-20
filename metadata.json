@@ -1,9 +1,15 @@
 {
   "name": "Spotlight Search",
-  "description": "A universal search launcher with file search, fuzzy matching, and inline calculator. Open with Alt+Space.",
+  "description": "A fast, keyboard-driven universal search launcher for GNOME Shell. Press Alt+Space to instantly search files across your home directory, Documents, Downloads, and Desktop. Features include fuzzy matching with character highlighting, inline calculator with safe AST parsing (no eval), real-time results as you type, and full keyboard navigation. Lightweight and optimized for minimal CPU usage. Perfect for power users who want quick access to files without leaving their workflow.",
   "uuid": "spotlight-search@extension",
   "version": 1,
   "shell-version": ["44", "45", "46", "47"],
-  "url": "https://github.com/example/spotlight-search",
-  "settings-schema": "org.gnome.shell.extensions.spotlight-search"
+  "url": "https://github.com/evildevill/spotlight-search-extension",
+  "settings-schema": "org.gnome.shell.extensions.spotlight-search",
+  "gettext-domain": "spotlight-search",
+  "author": "Waseem Akram",
+  "license": "MIT",
+  "contributors": [
+    "Waseem Akram <hi@wasii.dev>"
+  ]
 }

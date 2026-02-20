@@ -404,6 +404,19 @@ export default class SpotlightSearch extends Extension {
         this._separator.hide();
         this._scroll.hide();
 
+        // Push modal to capture all input events (keyboard, scroll, etc.)
+        // This prevents background apps from receiving events
+        if (!Main.pushModal(this._overlay, {
+            actionMode: Shell.ActionMode.NORMAL,
+        })) {
+            // Failed to grab modal, hide and return
+            log('[SpotlightSearch] Failed to grab modal');
+            this._backdrop.hide();
+            this._overlay.hide();
+            this._visible = false;
+            return;
+        }
+
         // Focus the entry
         this._entry.grab_key_focus();
         global.stage.set_key_focus(this._entry.clutter_text);
@@ -412,6 +425,9 @@ export default class SpotlightSearch extends Extension {
     _hide() {
         if (!this._visible) return;
         this._visible = false;
+
+        // Pop modal to release input capture
+        Main.popModal(this._overlay);
 
         this._overlay.ease({
             opacity: 0,
