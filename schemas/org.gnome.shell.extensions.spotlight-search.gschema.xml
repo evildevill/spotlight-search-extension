@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.spotlight-search"
+          path="/org/gnome/shell/extensions/spotlight-search/">
+
+    <key name="spotlight-search-toggle" type="as">
+      <default><![CDATA[['<Alt>space']]]></default>
+      <summary>Toggle Spotlight Search</summary>
+      <description>Keybinding to open/close the Spotlight Search overlay.</description>
+    </key>
+
+  </schema>
+</schemalist>

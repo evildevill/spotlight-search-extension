@@ -1,0 +1,154 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Spotlight Search — GNOME Shell Extension Stylesheet
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Overlay Container ─────────────────────────────────────────────── */
+.spotlight-overlay {
+    background-color: rgba(20, 20, 28, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 0;
+    min-width: 680px;
+    max-width: 680px;
+
+    /* Subtle depth shadow */
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6),
+                0 2px 8px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* ── Search Entry ──────────────────────────────────────────────────── */
+.spotlight-entry {
+    background-color: transparent;
+    border: none;
+    border-radius: 16px 16px 0 0;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 18px;
+    font-weight: 300;
+    padding: 20px 24px 20px 20px;
+    caret-color: #6e9ef7;
+    selection-background-color: rgba(110, 158, 247, 0.3);
+}
+
+.spotlight-entry:focus {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+}
+
+/* Hint / placeholder text */
+.spotlight-entry StLabel.hint-text {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* Search icon */
+.spotlight-search-icon {
+    color: rgba(255, 255, 255, 0.35);
+    icon-size: 20px;
+    margin-right: 4px;
+}
+
+/* ── Separator ─────────────────────────────────────────────────────── */
+.spotlight-separator {
+    background-color: rgba(255, 255, 255, 0.08);
+    height: 1px;
+    margin: 0 16px;
+}
+
+/* ── Calculator Result Label ───────────────────────────────────────── */
+.spotlight-calc-label {
+    color: #6e9ef7;
+    font-size: 22px;
+    font-weight: 200;
+    padding: 4px 24px 12px 24px;
+    letter-spacing: 1px;
+}
+
+/* ── Scroll View ───────────────────────────────────────────────────── */
+.spotlight-scroll {
+    max-height: 360px;
+    padding: 6px 0;
+}
+
+/* ── Results Container ─────────────────────────────────────────────── */
+.spotlight-results {
+    padding: 4px 0 8px 0;
+}
+
+/* ── Individual Result Row ─────────────────────────────────────────── */
+.spotlight-result-row {
+    padding: 10px 20px;
+    spacing: 14px;
+    border-radius: 8px;
+    margin: 1px 8px;
+    transition-duration: 80ms;
+    transition-property: background-color;
+}
+
+.spotlight-result-row:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.spotlight-result-selected {
+    background-color: rgba(110, 158, 247, 0.18) !important;
+    border: none;
+}
+
+/* ── Result Icon ───────────────────────────────────────────────────── */
+.spotlight-result-icon {
+    color: rgba(255, 255, 255, 0.50);
+    min-width: 22px;
+    min-height: 22px;
+    margin-top: 2px;
+}
+
+.spotlight-result-selected .spotlight-result-icon {
+    color: #6e9ef7;
+}
+
+/* ── Result Name (unhighlighted parts) ─────────────────────────────── */
+.spotlight-result-name-box {
+    spacing: 0;
+}
+
+.spotlight-result-name {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* ── Highlighted Match ─────────────────────────────────────────────── */
+.spotlight-match-highlight {
+    color: #6e9ef7;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ── Path Subtitle ─────────────────────────────────────────────────── */
+.spotlight-result-path {
+    color: rgba(255, 255, 255, 0.30);
+    font-size: 11px;
+    font-weight: 300;
+    margin-top: 1px;
+}
+
+/* ── Scrollbar (minimal) ───────────────────────────────────────────── */
+.spotlight-scroll StScrollBar {
+    padding: 0 2px;
+}
+
+.spotlight-scroll StScrollBar StBin#trough {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    min-width: 4px;
+    max-width: 4px;
+}
+
+.spotlight-scroll StScrollBar StButton#vhandle {
+    background-color: rgba(255, 255, 255, 0.20);
+    border-radius: 4px;
+    min-width: 4px;
+    max-width: 4px;
+}
