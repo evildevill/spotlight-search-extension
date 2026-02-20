@@ -248,14 +248,21 @@ export default class SpotlightSearch extends Extension {
     // ─── UI Construction ────────────────────────────────────────────────────
 
     _buildUI() {
-        // Full-screen transparent backdrop to catch outside clicks
+        // Full-screen transparent backdrop to catch outside clicks and events
         this._backdrop = new Clutter.Actor({
             reactive: true,
             width: global.screen_width,
             height: global.screen_height,
             visible: false,
         });
-        this._backdrop.connect('button-press-event', () => this._hide());
+        this._backdrop.connect('button-press-event', () => {
+            this._hide();
+            return Clutter.EVENT_STOP;
+        });
+        // Capture scroll events to prevent background scrolling
+        this._backdrop.connect('scroll-event', () => Clutter.EVENT_STOP);
+        // Capture key events to prevent background app interaction
+        this._backdrop.connect('key-press-event', () => Clutter.EVENT_STOP);
 
         // Main container (centered, fixed width)
         this._overlay = new St.BoxLayout({
@@ -263,6 +270,15 @@ export default class SpotlightSearch extends Extension {
             vertical: true,
             reactive: true,
             track_hover: true,
+            can_focus: true,
+        });
+        // Capture scroll events on the overlay to enable scrolling
+        this._overlay.connect('scroll-event', (actor, event) => {
+            // Let the scroll view handle it if we have results
+            if (this._scroll && this._scroll.visible) {
+                return Clutter.EVENT_PROPAGATE;
+            }
+            return Clutter.EVENT_STOP;
         });
 
         // Search entry
@@ -281,7 +297,10 @@ export default class SpotlightSearch extends Extension {
         this._entry.set_primary_icon(icon);
 
         this._entry.clutter_text.connect('text-changed', () => this._onTextChanged());
-        this._entry.clutter_text.connect('key-press-event', (_, event) => this._onKeyPress(event));
+        this._entry.clutter_text.connect('key-press-event', (_, event) => {
+            const result = this._onKeyPress(event);
+            return result;
+        });
 
         // Result prefix label (for calculator result)
         this._calcLabel = new St.Label({
@@ -297,7 +316,10 @@ export default class SpotlightSearch extends Extension {
             visible: false,
             x_expand: true,
             y_expand: false,
+            reactive: true,
         });
+        // Enable scroll event capture on the scroll view
+        this._scroll.connect('scroll-event', () => Clutter.EVENT_PROPAGATE);
 
         this._resultsBox = new St.BoxLayout({
             style_class: 'spotlight-results',

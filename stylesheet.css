@@ -1,83 +1,67 @@
 /* ═══════════════════════════════════════════════════════════════════
    Spotlight Search — GNOME Shell Extension Stylesheet
-   macOS-inspired Glassy Design
+   Clean Modern Design
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Overlay Container ─────────────────────────────────────────────── */
 .spotlight-overlay {
-    /* Glassy translucent background with blur effect simulation */
-    background-color: rgba(30, 30, 40, 0.75);
-    background-image: linear-gradient(135deg, 
-                      rgba(255, 255, 255, 0.05) 0%, 
-                      rgba(255, 255, 255, 0.02) 50%,
-                      rgba(0, 0, 0, 0.05) 100%);
-    
-    /* Vibrant border with gradient */
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 20px;
+    background-color: rgba(25, 25, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
     padding: 0;
     min-width: 680px;
     max-width: 680px;
-
-    /* Enhanced depth with multiple shadows for glassy effect */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-                0 1px 2px rgba(255, 255, 255, 0.1) inset,
-                0 32px 64px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* ── Search Entry ──────────────────────────────────────────────────── */
 .spotlight-entry {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: transparent;
     border: none;
-    border-radius: 20px 20px 0 0;
+    border-radius: 12px 12px 0 0;
     color: rgba(255, 255, 255, 0.95);
     font-size: 18px;
     font-weight: 300;
-    padding: 20px 24px 20px 20px;
-    caret-color: #7eb4ff;
-    selection-background-color: rgba(126, 180, 255, 0.35);
+    padding: 20px 24px;
+    caret-color: #5294e2;
+    selection-background-color: rgba(82, 148, 226, 0.3);
 }
 
 .spotlight-entry:focus {
-    background-color: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    background-color: transparent;
+    box-shadow: none;
     border: none;
-    transition-duration: 200ms;
 }
 
 /* Hint / placeholder text */
 .spotlight-entry StLabel.hint-text {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.35);
     font-size: 18px;
     font-weight: 300;
 }
 
 /* Search icon */
 .spotlight-search-icon {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.45);
     icon-size: 20px;
     margin-right: 4px;
 }
 
 /* ── Separator ─────────────────────────────────────────────────────── */
 .spotlight-separator {
-    background: linear-gradient(90deg, 
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.12) 50%,
-                rgba(255, 255, 255, 0) 100%);
+    background-color: rgba(255, 255, 255, 0.1);
     height: 1px;
-    margin: 0 20px;
+    margin: 0 16px;
 }
 
 /* ── Calculator Result Label ───────────────────────────────────────── */
 .spotlight-calc-label {
-    color: #7eb4ff;
+    color: #5294e2;
     font-size: 22px;
     font-weight: 200;
     padding: 4px 24px 12px 24px;
     letter-spacing: 1px;
-    text-shadow: 0 0 20px rgba(126, 180, 255, 0.3);
 }
 
 /* ── Scroll View ───────────────────────────────────────────────────── */
@@ -97,27 +81,19 @@
 .spotlight-result-row {
     padding: 10px 20px;
     spacing: 14px;
-    border-radius: 10px;
+    border-radius: 8px;
     margin: 2px 10px;
-    transition-duration: 150ms;
-    transition-property: background-color, transform;
-    background-color: transparent;
+    transition-duration: 100ms;
+    transition-property: background-color;
 }
 
 .spotlight-result-row:hover {
-    background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.08) 0%, 
-                rgba(255, 255, 255, 0.04) 100%);
-    transform: scale(1.01);
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 .spotlight-result-selected {
-    background: linear-gradient(135deg, 
-                rgba(126, 180, 255, 0.25) 0%, 
-                rgba(126, 180, 255, 0.15) 100%) !important;
-    border: 1px solid rgba(126, 180, 255, 0.3);
-    box-shadow: 0 0 20px rgba(126, 180, 255, 0.2),
-                0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    background-color: rgba(82, 148, 226, 0.25) !important;
+    border: 1px solid rgba(82, 148, 226, 0.4);
 }
 
 /* ── Result Icon ───────────────────────────────────────────────────── */
@@ -126,12 +102,10 @@
     min-width: 22px;
     min-height: 22px;
     margin-top: 2px;
-    transition-duration: 150ms;
 }
 
 .spotlight-result-selected .spotlight-result-icon {
-    color: #7eb4ff;
-    text-shadow: 0 0 10px rgba(126, 180, 255, 0.5);
+    color: #5294e2;
 }
 
 /* ── Result Name (unhighlighted parts) ─────────────────────────────── */
@@ -140,22 +114,21 @@
 }
 
 .spotlight-result-name {
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.90);
     font-size: 14px;
     font-weight: 400;
 }
 
 /* ── Highlighted Match ─────────────────────────────────────────────── */
 .spotlight-match-highlight {
-    color: #7eb4ff;
+    color: #5294e2;
     font-size: 14px;
     font-weight: 600;
-    text-shadow: 0 0 8px rgba(126, 180, 255, 0.3);
 }
 
 /* ── Path Subtitle ─────────────────────────────────────────────────── */
 .spotlight-result-path {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.40);
     font-size: 11px;
     font-weight: 300;
     margin-top: 1px;
@@ -167,18 +140,15 @@
 }
 
 .spotlight-scroll StScrollBar StBin#trough {
-    background-color: rgba(255, 255, 255, 0.04);
+    background-color: rgba(255, 255, 255, 0.06);
     border-radius: 4px;
-    min-width: 5px;
-    max-width: 5px;
+    min-width: 4px;
+    max-width: 4px;
 }
 
 .spotlight-scroll StScrollBar StButton#vhandle {
-    background: linear-gradient(90deg, 
-                rgba(126, 180, 255, 0.3) 0%, 
-                rgba(126, 180, 255, 0.5) 100%);
+    background-color: rgba(255, 255, 255, 0.25);
     border-radius: 4px;
-    min-width: 5px;
-    max-width: 5px;
-    box-shadow: 0 0 8px rgba(126, 180, 255, 0.3);
+    min-width: 4px;
+    max-width: 4px;
 }
