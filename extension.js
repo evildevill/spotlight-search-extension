@@ -13,7 +13,7 @@ const CONFIG = {
         GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOADS),
         GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DESKTOP),
     ].filter(Boolean),
-    SEARCH_DELAY_MS: 150,            // Debounce delay for search
+    SEARCH_DELAY_MS: 50,             // Debounce delay for search (faster response)
     FIND_MAX_DEPTH: 5,               // Max directory depth for file search
     OVERLAY_WIDTH: 680,              // Search overlay width in pixels
 };
@@ -295,11 +295,14 @@ export default class SpotlightSearch extends Extension {
             hscrollbar_policy: St.PolicyType.NEVER,
             vscrollbar_policy: St.PolicyType.AUTOMATIC,
             visible: false,
+            x_expand: true,
+            y_expand: false,
         });
 
         this._resultsBox = new St.BoxLayout({
             style_class: 'spotlight-results',
             vertical: true,
+            x_expand: true,
         });
         this._scroll.set_child(this._resultsBox);
 
@@ -410,6 +413,7 @@ export default class SpotlightSearch extends Extension {
 
     _onTextChanged() {
         const text = this._entry.get_text().trim();
+        log(`[SpotlightSearch] Text changed: "${text}"`);
 
         // Cancel existing debounce
         if (this._searchTimeout) {
@@ -434,6 +438,7 @@ export default class SpotlightSearch extends Extension {
         // Debounced file search
         this._searchTimeout = GLib.timeout_add(GLib.PRIORITY_DEFAULT, CONFIG.SEARCH_DELAY_MS, () => {
             this._searchTimeout = null;
+            log(`[SpotlightSearch] Running search for: "${text}"`);
             this._runSearch(text);
             return GLib.SOURCE_REMOVE;
         });
@@ -480,15 +485,21 @@ export default class SpotlightSearch extends Extension {
         // Deselect old
         if (this._selectedIndex >= 0) {
             const oldItem = this._resultsBox.get_child_at_index(this._selectedIndex);
-            oldItem?.remove_style_class('spotlight-result-selected');
+            if (oldItem && oldItem.remove_style_class_name) {
+                oldItem.remove_style_class_name('spotlight-result-selected');
+            }
         }
         this._selectedIndex = newIdx;
         // Select new
         if (newIdx >= 0) {
             const newItem = this._resultsBox.get_child_at_index(newIdx);
-            newItem?.add_style_class('spotlight-result-selected');
-            // Scroll into view
-            newItem?.grab_key_focus();
+            if (newItem && newItem.add_style_class_name) {
+                newItem.add_style_class_name('spotlight-result-selected');
+                // Scroll into view if possible
+                if (newItem.grab_key_focus) {
+                    newItem.grab_key_focus();
+                }
+            }
         }
     }
 
@@ -537,12 +548,22 @@ export default class SpotlightSearch extends Extension {
             });
 
             const collectedPaths = [];
+            let lastUpdateCount = 0;
+            
             const readLine = () => {
                 stream.read_line_async(GLib.PRIORITY_LOW, null, (s, res) => {
                     try {
                         const [line] = s.read_line_finish_utf8(res);
                         if (line !== null) {
                             collectedPaths.push(line);
+                            
+                            // Update display every 5 items or when we hit max results
+                            if (collectedPaths.length - lastUpdateCount >= 5 || 
+                                collectedPaths.length >= CONFIG.MAX_RESULTS) {
+                                this._displayResults(query, collectedPaths);
+                                lastUpdateCount = collectedPaths.length;
+                            }
+                            
                             if (collectedPaths.length < CONFIG.MAX_RESULTS * 3) {
                                 readLine();
                             } else {
@@ -550,10 +571,14 @@ export default class SpotlightSearch extends Extension {
                                 this._displayResults(query, collectedPaths);
                             }
                         } else {
+                            // Process finished, display final results
                             this._displayResults(query, collectedPaths);
                         }
                     } catch (_) {
-                        this._displayResults(query, collectedPaths);
+                        // Final update on error
+                        if (collectedPaths.length > 0) {
+                            this._displayResults(query, collectedPaths);
+                        }
                     }
                 });
             };
@@ -564,6 +589,15 @@ export default class SpotlightSearch extends Extension {
     }
 
     _displayResults(query, paths) {
+        try {
+            log(`[SpotlightSearch] === DISPLAY RESULTS CALLED ===`);
+            log(`[SpotlightSearch] Query: \"${query}\", Paths found: ${paths.length}`);
+        
+        if (paths.length > 0) {
+            log(`[SpotlightSearch] First 3 paths:`);
+            paths.slice(0, 3).forEach(p => log(`  - ${p}`));
+        }
+        
         // Score and sort
         const scored = paths
             .map(p => {
@@ -575,30 +609,64 @@ export default class SpotlightSearch extends Extension {
             .sort((a, b) => b.score - a.score)
             .slice(0, CONFIG.MAX_RESULTS);
 
+        log(`[SpotlightSearch] Scored results: ${scored.length}`);
+        if (scored.length > 0) {
+            log(`[SpotlightSearch] Top scored result: ${scored[0].basename} (score: ${scored[0].score})`);
+        }
+        
         this._results = scored;
         this._selectedIndex = scored.length > 0 ? 0 : -1;
 
         this._clearResultsUI();
+        log(`[SpotlightSearch] UI cleared, resultsBox has ${this._resultsBox.get_n_children()} children`);
 
         if (scored.length === 0) {
+            log('[SpotlightSearch] No scored results, hiding UI');
             this._scroll.hide();
             this._separator.hide();
             return;
         }
 
+        log(`[SpotlightSearch] Creating ${scored.length} result rows...`);
         scored.forEach((item, idx) => {
             const row = this._createResultRow(item, query, idx);
             this._resultsBox.add_child(row);
+            log(`[SpotlightSearch] Added row ${idx}: ${item.basename}`);
         });
 
+        const childCount = this._resultsBox.get_n_children();
+        log(`[SpotlightSearch] ResultsBox now has ${childCount} children`);
+
         // Select first item
-        if (scored.length > 0) {
+        if (childCount > 0) {
             const firstRow = this._resultsBox.get_child_at_index(0);
-            firstRow?.add_style_class('spotlight-result-selected');
+            log(`[SpotlightSearch] First row exists: ${firstRow !== null}`);
+            if (firstRow && firstRow.add_style_class_name) {
+                firstRow.add_style_class_name('spotlight-result-selected');
+                log('[SpotlightSearch] First row selected');
+            }
         }
 
+        log(`[SpotlightSearch] Showing separator and scroll...`);
+        log(`[SpotlightSearch] Separator visible before: ${this._separator.visible}`);
+        log(`[SpotlightSearch] Scroll visible before: ${this._scroll.visible}`);
+        
         this._separator.show();
         this._scroll.show();
+        
+        log(`[SpotlightSearch] Separator visible after: ${this._separator.visible}`);
+        log(`[SpotlightSearch] Scroll visible after: ${this._scroll.visible}`);
+        log(`[SpotlightSearch] Scroll height: ${this._scroll.height}, width: ${this._scroll.width}`);
+        log(`[SpotlightSearch] ResultsBox height: ${this._resultsBox.height}, width: ${this._resultsBox.width}`);
+        
+        // Force a relayout to ensure visibility
+        this._overlay.queue_relayout();
+        log('[SpotlightSearch] ===Relayout queued ===');
+        } catch (error) {
+            logError(error, '[SpotlightSearch] ERROR in _displayResults');
+            log(`[SpotlightSearch] Error message: ${error.message}`);
+            log(`[SpotlightSearch] Error stack: ${error.stack}`);
+        }
     }
 
     _createResultRow(item, query, idx) {

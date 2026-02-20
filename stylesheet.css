@@ -1,111 +1,137 @@
 /* ═══════════════════════════════════════════════════════════════════
    Spotlight Search — GNOME Shell Extension Stylesheet
+   macOS-inspired Glassy Design
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Overlay Container ─────────────────────────────────────────────── */
 .spotlight-overlay {
-    background-color: rgba(20, 20, 28, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
+    /* Glassy translucent background with blur effect simulation */
+    background-color: rgba(30, 30, 40, 0.75);
+    background-image: linear-gradient(135deg, 
+                      rgba(255, 255, 255, 0.05) 0%, 
+                      rgba(255, 255, 255, 0.02) 50%,
+                      rgba(0, 0, 0, 0.05) 100%);
+    
+    /* Vibrant border with gradient */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
     padding: 0;
     min-width: 680px;
     max-width: 680px;
 
-    /* Subtle depth shadow */
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6),
-                0 2px 8px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    /* Enhanced depth with multiple shadows for glassy effect */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                0 1px 2px rgba(255, 255, 255, 0.1) inset,
+                0 32px 64px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
 }
 
 /* ── Search Entry ──────────────────────────────────────────────────── */
 .spotlight-entry {
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.03);
     border: none;
-    border-radius: 16px 16px 0 0;
+    border-radius: 20px 20px 0 0;
     color: rgba(255, 255, 255, 0.95);
     font-size: 18px;
     font-weight: 300;
     padding: 20px 24px 20px 20px;
-    caret-color: #6e9ef7;
-    selection-background-color: rgba(110, 158, 247, 0.3);
+    caret-color: #7eb4ff;
+    selection-background-color: rgba(126, 180, 255, 0.35);
 }
 
 .spotlight-entry:focus {
-    background-color: transparent;
-    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
     border: none;
+    transition-duration: 200ms;
 }
 
 /* Hint / placeholder text */
 .spotlight-entry StLabel.hint-text {
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.3);
     font-size: 18px;
     font-weight: 300;
 }
 
 /* Search icon */
 .spotlight-search-icon {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.4);
     icon-size: 20px;
     margin-right: 4px;
 }
 
 /* ── Separator ─────────────────────────────────────────────────────── */
 .spotlight-separator {
-    background-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.12) 50%,
+                rgba(255, 255, 255, 0) 100%);
     height: 1px;
-    margin: 0 16px;
+    margin: 0 20px;
 }
 
 /* ── Calculator Result Label ───────────────────────────────────────── */
 .spotlight-calc-label {
-    color: #6e9ef7;
+    color: #7eb4ff;
     font-size: 22px;
     font-weight: 200;
     padding: 4px 24px 12px 24px;
     letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(126, 180, 255, 0.3);
 }
 
 /* ── Scroll View ───────────────────────────────────────────────────── */
 .spotlight-scroll {
-    max-height: 360px;
+    min-height: 50px;
+    max-height: 400px;
     padding: 6px 0;
 }
 
 /* ── Results Container ─────────────────────────────────────────────── */
 .spotlight-results {
     padding: 4px 0 8px 0;
+    min-height: 40px;
 }
 
 /* ── Individual Result Row ─────────────────────────────────────────── */
 .spotlight-result-row {
     padding: 10px 20px;
     spacing: 14px;
-    border-radius: 8px;
-    margin: 1px 8px;
-    transition-duration: 80ms;
-    transition-property: background-color;
+    border-radius: 10px;
+    margin: 2px 10px;
+    transition-duration: 150ms;
+    transition-property: background-color, transform;
+    background-color: transparent;
 }
 
 .spotlight-result-row:hover {
-    background-color: rgba(255, 255, 255, 0.06);
+    background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%, 
+                rgba(255, 255, 255, 0.04) 100%);
+    transform: scale(1.01);
 }
 
 .spotlight-result-selected {
-    background-color: rgba(110, 158, 247, 0.18) !important;
-    border: none;
+    background: linear-gradient(135deg, 
+                rgba(126, 180, 255, 0.25) 0%, 
+                rgba(126, 180, 255, 0.15) 100%) !important;
+    border: 1px solid rgba(126, 180, 255, 0.3);
+    box-shadow: 0 0 20px rgba(126, 180, 255, 0.2),
+                0 1px 0 rgba(255, 255, 255, 0.1) inset;
 }
 
 /* ── Result Icon ───────────────────────────────────────────────────── */
 .spotlight-result-icon {
-    color: rgba(255, 255, 255, 0.50);
+    color: rgba(255, 255, 255, 0.55);
     min-width: 22px;
     min-height: 22px;
     margin-top: 2px;
+    transition-duration: 150ms;
 }
 
 .spotlight-result-selected .spotlight-result-icon {
-    color: #6e9ef7;
+    color: #7eb4ff;
+    text-shadow: 0 0 10px rgba(126, 180, 255, 0.5);
 }
 
 /* ── Result Name (unhighlighted parts) ─────────────────────────────── */
@@ -114,21 +140,22 @@
 }
 
 .spotlight-result-name {
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255, 255, 255, 0.92);
     font-size: 14px;
     font-weight: 400;
 }
 
 /* ── Highlighted Match ─────────────────────────────────────────────── */
 .spotlight-match-highlight {
-    color: #6e9ef7;
+    color: #7eb4ff;
     font-size: 14px;
     font-weight: 600;
+    text-shadow: 0 0 8px rgba(126, 180, 255, 0.3);
 }
 
 /* ── Path Subtitle ─────────────────────────────────────────────────── */
 .spotlight-result-path {
-    color: rgba(255, 255, 255, 0.30);
+    color: rgba(255, 255, 255, 0.35);
     font-size: 11px;
     font-weight: 300;
     margin-top: 1px;
@@ -140,15 +167,18 @@
 }
 
 .spotlight-scroll StScrollBar StBin#trough {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.04);
     border-radius: 4px;
-    min-width: 4px;
-    max-width: 4px;
+    min-width: 5px;
+    max-width: 5px;
 }
 
 .spotlight-scroll StScrollBar StButton#vhandle {
-    background-color: rgba(255, 255, 255, 0.20);
+    background: linear-gradient(90deg, 
+                rgba(126, 180, 255, 0.3) 0%, 
+                rgba(126, 180, 255, 0.5) 100%);
     border-radius: 4px;
-    min-width: 4px;
-    max-width: 4px;
+    min-width: 5px;
+    max-width: 5px;
+    box-shadow: 0 0 8px rgba(126, 180, 255, 0.3);
 }

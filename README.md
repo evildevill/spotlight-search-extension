@@ -14,7 +14,8 @@ Press **Alt + Space** to open. Search files, launch apps, and evaluate math inli
 | ⌨️ Keyboard Nav      | Arrow keys to navigate, Enter to launch, Esc to close     |
 | 🖱️ Mouse Support     | Click any result to open it                               |
 | ✨ Fuzzy Matching     | Finds partial matches, highlights matched characters      |
-| 🎨 Modern Dark UI    | Rounded, semi-transparent, smooth fade animations         |
+| 🎨 Glassy macOS UI   | Translucent glass-morphism design with smooth animations  |
+| ⚡ Real-time Results | Results appear instantly as you type                      |
 
 ---
 
